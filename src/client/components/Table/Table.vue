@@ -5,7 +5,7 @@
       <span>{{ header }}</span>
     </div>
   </div>
-  <div class="table-body-container">
+  <div class="table-body-container" v-on:scroll="scrollHandler">
       <table-item v-for="(item, index) in items" :key="index" :item="item" :keys="headers"  :class="{border: index}"/>
   </div>
 </div>
@@ -25,9 +25,28 @@ export default {
       required: true,
       type: Array,
       default: () => [],
-    }
+    },
+    loading: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  data() {
+    return {
+      index: 0,
+    };
   },
   name: "Table-Component",
+  methods : {
+    scrollHandler($event) {
+      const { scrollTop, offsetHeight, scrollHeight } = $event.target
+      if (scrollTop + offsetHeight === scrollHeight && !this.loading) this.requestMoreItems();
+    },
+    requestMoreItems() {
+      this.index ++;
+      this.$emit('request-items', this.index);
+    },
+  }
 }
 </script>
 
@@ -57,6 +76,8 @@ export default {
     }
   }
   .table-body-container {
+    max-height: 400px;
+    overflow: auto;
     width: 100%;
     display: flex;
     flex-direction: column;

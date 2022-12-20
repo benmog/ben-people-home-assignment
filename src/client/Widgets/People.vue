@@ -1,6 +1,8 @@
 <template>
 <div class="people-container">
-  <my-table :items="people" :headers="headers"/>
+  <my-table
+      @request-items="(index) => getPeople(index)"
+      :items="people" :headers="headers" :loading="loading"/>
 </div>
 </template>
 
@@ -17,14 +19,20 @@ export default {
     return {
       people: [],
       headers: [],
+      loading: false,
     };
   },
   methods: {
     async init() {
-      const { items, headers } = await actions.getPeople();
-      [this.people, this.headers] = [items, headers];
+      await this.getPeople(0, 20);
     },
-    async getPeople() {
+    async getPeople(index, numberOfItems = 20) {
+      this.loading = true;
+      const { items, headers } = await actions.getPeople(index * numberOfItems, numberOfItems);
+      this.loading = false;
+      this.people = [...this.people, ...items];
+      this.headers = headers;
+      return { items, headers };
 
     }
   }
