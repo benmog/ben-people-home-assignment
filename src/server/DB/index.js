@@ -4,4 +4,4 @@ const DB = {
     people: new People(),
 }
 
-export default DB;
+module.exports = DB

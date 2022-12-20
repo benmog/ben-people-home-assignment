@@ -20,9 +20,7 @@ export default {
   },
   computed: {
     parsedItem() {
-      const item = this.keys.reduce((acc, key) => ({ [key]: this.item[key] || "" }), {})
-      delete item.id;
-      return item;
+      return this.keys.reduce((acc, key) => ({ ...acc, [key]: this.item[key] || "" }), {})
     },
   },
   name: "TableItem"
@@ -31,8 +29,15 @@ export default {
 
 <style scoped lang="scss">
  .item-container {
+   display: flex;
+   width: 100%;
+   justify-content: space-between;
    .item-wrapper {
-
+     padding: 4px;
+     display: flex;
+     width: 100%;
+     justify-content: space-between;
    }
  }
+
 </style>

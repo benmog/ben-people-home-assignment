@@ -1,12 +1,12 @@
 <template>
 <div class="table-main-container">
   <div class="table-header-container">
-
+    <div v-for="(header, headerIndex) in headers" :key="headerIndex" class="table-header-item">
+      <span>{{ header }}</span>
+    </div>
   </div>
   <div class="table-body-container">
-    <div v-for="(item, index) in items" :key="index">
-      <table-item :item="item"/>
-    </div>
+      <table-item v-for="(item, index) in items" :key="index" :item="item" :keys="headers"  :class="{border: index}"/>
   </div>
 </div>
 </template>
@@ -17,18 +17,55 @@ export default {
   components: { TableItem },
   props: {
     items: {
+      required: true,
       type: Array,
       default: () => [],
     },
     headers: {
+      required: true,
       type: Array,
       default: () => [],
     }
   },
-  name: "Table",
+  name: "Table-Component",
 }
 </script>
 
 <style scoped lang="scss">
+.table-main-container {
+  border-radius: 4px;
+  border: 1px solid #8484d7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  .table-header-container {
+    color: white;
+    font-weight: 500;
+    background-color:#8484d7;
+    z-index: 1;
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .table-header-item {
+      width: 100%;
+      padding: 4px;
+      text-align: left;
+    }
+  }
+  .table-body-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
 
+  }
+}
+.border {
+  border-top: 1px solid #efefef;
+  z-index: 0;
+  position: relative;
+}
 </style>
