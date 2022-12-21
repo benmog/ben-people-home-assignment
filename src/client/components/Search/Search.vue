@@ -1,7 +1,7 @@
 <template>
 <div class="search-input-container">
   <div class="serach-wrapper">
-    <input @input="onInput"/>
+    <input placeholder="Search..." @input="onInput"/>
   </div>
 </div>
 </template>

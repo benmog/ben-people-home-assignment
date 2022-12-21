@@ -35,7 +35,7 @@ export default {
     },
     async getPeople(index, numberOfItems = 20) {
       this.loading = true;
-      const { items, headers } = await actions.getPeople(index * numberOfItems, numberOfItems);
+      const { items, headers } = await actions.getPeople(index * numberOfItems, numberOfItems, this.filters);
       this.loading = false;
       this.people = [...this.people, ...items];
       if (!this.headers.length) this.headers = headers;

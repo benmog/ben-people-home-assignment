@@ -42,8 +42,6 @@ export default {
   },
   methods: {
     dropdownToggle(value) {
-      debugger; // eslint-disable-line no-debugger
-
       this.isDropdownOpen = value === undefined ? !this.isDropdownOpen : value;
     },
     addItems(item) {
