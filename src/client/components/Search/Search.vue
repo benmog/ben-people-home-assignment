@@ -9,10 +9,26 @@
 <script>
 export default {
   name: "Search-component",
+  data() {
+    return {
+      value: '',
+      id: null,
+    };
+  },
   methods: {
     onInput(val) {
-      console.log(val.target.value);
+      this.value = val.target.value;
+      this.debounce();
     },
+    debounce() {
+      clearTimeout(this.id);
+      this.id = setTimeout(() => {
+          this.notifySearch();
+        }, 500);
+    },
+    notifySearch() {
+      this.$emit('search', this.value);
+    }
   },
 }
 </script>

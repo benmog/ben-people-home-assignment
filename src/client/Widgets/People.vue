@@ -2,7 +2,7 @@
 <div class="people-container">
   <div class="header">
     <dropdown :items="headers" @selected-items="updateFiltersKeys"/>
-    <search/>
+    <search @search="updateFiltersValue"/>
   </div>
   <my-table
       @request-items="(index) => getPeople(index)"
