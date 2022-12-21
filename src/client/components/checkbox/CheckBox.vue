@@ -1,7 +1,7 @@
 <template>
 <div class="checkbox-container" @click="onCheck">
-  <div class="checkbox" :class="{checked: isChecked}">
-    <img class="check-sign" :src="check" v-if="isChecked"/>
+  <div class="checkbox" :class="{checked: checked || isChecked}">
+    <img class="check-sign" :src="check" v-if="checked || isChecked"/>
   </div>
 </div>
 </template>
@@ -9,11 +9,17 @@
 <script>
 import check from './check.svg'
 export default {
+  props: {
+    checked: {
+      type: Boolean,
+      default: false,
+    },
+  },
   name: 'Check-Box',
   data() {
     return {
       check,
-      isChecked: false,
+      isChecked: this.$props.checked,
     };
   },
   methods: {

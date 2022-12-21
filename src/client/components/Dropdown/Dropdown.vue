@@ -5,9 +5,9 @@
       <span>{{ dropdownHeader }}</span>
     </div>
     <div v-if="isDropdownOpen" class="dropdown-body" v-on-clickaway="() => dropdownToggle(false)">
-      <div v-for="(item, index) in items" :key="index" class="dropdown-item-wrapper" :class="{selected: selectedItems[item]}">
+      <div v-for="(item, index) in items" :key="index" class="dropdown-item-wrapper" :class="{selected: selectedItems[item]}" @click="() => updateItem(item)">
         <div class="dropdown-item-container">
-          <check-box @on-check="(sign) => updateItem(sign, item)"/>
+          <check-box :checked="!!selectedItems[item]" :ref="`checkbox${item}`"/>
           <span class="item-text">{{ item }}</span>
         </div>
       </div>
@@ -37,7 +37,7 @@ export default {
   data() {
     return {
       isDropdownOpen: false,
-      selectedItems: [],
+      selectedItems: {},
     };
   },
   methods: {
@@ -47,13 +47,16 @@ export default {
       this.isDropdownOpen = value === undefined ? !this.isDropdownOpen : value;
     },
     addItems(item) {
-      this.selectedItems[item];
+      this.selectedItems[item] = true;
+      console.log(this.selectedItems);
     },
     removeItem(item) {
       delete this.selectedItems[item];
     },
-    updateItem(sign, item) {
+    updateItem(item) {
+      const sign = !this.selectedItems[item];
       const handler = sign ? this.addItems : this.removeItem;
+      this.$refs[`checkbox${item}`][0].onCheck();
       handler(item);
       this.itemsUpdateEvent();
     },
@@ -74,18 +77,23 @@ export default {
 
     .dropdown-header {
       border-radius: 4px;
+      border: 1px solid white;
     }
     .header-marked {
       border: 1px solid  #8484d7;
     }
 
     .dropdown-body {
-      position: relative;
-      top: 10px;
       border: 1px solid black;
       border-radius: 4px;
       overflow-y: auto;
-      max-height: 100px;
+      max-height: 200px;
+      width: 200px;
+      position: absolute;
+      z-index: 10;
+      background-color: white;
+      top: 93px;
+
       .dropdown-item-wrapper {
         display: flex;
         justify-content: flex-start;
@@ -94,6 +102,7 @@ export default {
           width: 100%;
         }
         .dropdown-item-container {
+          padding: 10px 0;
           margin-left: 10px;
           cursor: pointer;
           display: flex;
