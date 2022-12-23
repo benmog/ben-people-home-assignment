@@ -46,7 +46,6 @@ export default {
     },
     addItems(item) {
       this.selectedItems[item] = true;
-      console.log(this.selectedItems);
     },
     removeItem(item) {
       delete this.selectedItems[item];
@@ -54,8 +53,8 @@ export default {
     updateItem(item) {
       const sign = !this.selectedItems[item];
       const handler = sign ? this.addItems : this.removeItem;
-      this.$refs[`checkbox${item}`][0].onCheck();
       handler(item);
+      this.$refs[`checkbox${item}`][0].updateCheckSign(!!this.selectedItems[item]);
       this.itemsUpdateEvent();
     },
     itemsUpdateEvent() {

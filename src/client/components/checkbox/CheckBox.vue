@@ -1,7 +1,7 @@
 <template>
 <div class="checkbox-container" @click="onCheck">
-  <div class="checkbox" :class="{checked: checked || isChecked}">
-    <img class="check-sign" :src="check" v-if="checked || isChecked"/>
+  <div class="checkbox" :class="{checked: isChecked}">
+    <img class="check-sign" :src="check" v-if="isChecked"/>
   </div>
 </div>
 </template>
@@ -24,8 +24,19 @@ export default {
   },
   methods: {
     onCheck() {
-      this.isChecked = !this.isChecked;
+      this.updateCheckSign(!this.isChecked);
       this.$emit('on-check', this.isChecked);
+    },
+    updateCheckSign(sign) {
+      this.isChecked = sign;
+    },
+  },
+  watch: {
+    checked: {
+      immediate: true,
+      handler(newVal) {
+        this.isChecked = newVal;
+      },
     },
   },
 }

@@ -5,8 +5,8 @@
     <search @search="updateFiltersValue"/>
   </div>
   <my-table
-      @request-items="(index) => getPeople(index)"
-      :items="people" :headers="headers" :loading="loading"/>
+      @request-items="() => getPeople(index)"
+      :items="people" :headers="headers" :loading="loading" :index="index"/>
 </div>
 </template>
 
@@ -27,29 +27,35 @@ export default {
       headers: [],
       filters: {keys: [], value: ''},
       loading: false,
+      index: 0,
     };
   },
   methods: {
     async init() {
-      await this.getPeople(0, 20);
+      await this.getPeople( 20);
     },
-    async getPeople(index, numberOfItems = 20) {
+    async getPeople(numberOfItems = 20) {
       this.loading = true;
-      const { items, headers } = await actions.getPeople(index * numberOfItems, numberOfItems, this.filters);
+      const { items, headers } = await actions.getPeople(this.index * numberOfItems, numberOfItems, this.filters);
       this.loading = false;
       this.people = [...this.people, ...items];
       if (!this.headers.length) this.headers = headers;
+      this.index ++;
     },
     async updateFiltersKeys(keys) {
-      this.filters[keys] = keys;
-      this.people = [];
-      await this.getPeople(0, 20)
+      this.filters.keys = keys;
+      this.reset();
+      await this.getPeople( 20)
     },
     async updateFiltersValue(value) {
-      this.filters[value] = value;
-      this.people = [];
-      await this.getPeople(0, 20);
+      this.filters.value = value;
+      if (this.filters.keys.length)this.reset();
+      await this.getPeople( 20);
     },
+    reset() {
+      this.people = [];
+      this.index = 0;
+    }
   }
 }
 </script>

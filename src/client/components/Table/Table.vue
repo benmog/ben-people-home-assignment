@@ -30,11 +30,10 @@ export default {
       type: Boolean,
       default: false,
     },
-  },
-  data() {
-    return {
-      index: 0,
-    };
+    index: {
+      type: Number,
+      default: 0,
+    },
   },
   name: "Table-Component",
   methods : {
@@ -43,8 +42,7 @@ export default {
       if (scrollTop + offsetHeight === scrollHeight && !this.loading) this.requestMoreItems();
     },
     requestMoreItems() {
-      this.index ++;
-      this.$emit('request-items', this.index);
+      this.$emit('request-items');
     },
   }
 }

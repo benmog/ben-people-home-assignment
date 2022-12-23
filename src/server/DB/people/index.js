@@ -15,10 +15,17 @@ class People {
     }
 
     filterItems(filters) {
-        if (filters.value && filters.keys.length) {
-            return this.people.filter(person => filters.keys.some(key => person[key].includes(filters.value)))
+        if (filters.value && filters.keys && filters.keys.length) {
+            return this.people.filter(person => filters.keys.some(key =>
+                person[key] && this.deepSearch(person[key], filters.value)))
         }
         return this.people;
+    }
+    deepSearch(personValue, filterValue) {
+        /** recursive way of deep searching in the objects.*/
+        if (typeof personValue !== 'object') return personValue.toString().includes(filterValue);
+        return Object.values(personValue).some(value => this.deepSearch(value, filterValue));
+
     }
     /* equals to SELECT * FROM people LIMIT 1 --> then taking only column keys.*/
     async getPeopleProperties() {
