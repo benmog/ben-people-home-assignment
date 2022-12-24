@@ -7,18 +7,12 @@ npm install
 
 ### Compiles and hot-reloads for development
 ```
-npm run serve
+npm run dev
+```
+### Run Local Server on port 3000 (or as it says in utils > servers.json)
+```
+npm run server
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+#### Client is within Vue.js 2 inside src>client, server in express inside src>server. DB is handled with JSON(people are saved there)
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
