@@ -1,7 +1,7 @@
 <template>
   <div class="item-container">
-    <div v-for="(value, key) in parsedItem" :key="key" class="item-wrapper">
-      <span>{{ value }}</span>
+    <div v-for="(value, key) in parsedItem" :key="key" class="item-wrapper" :title="JSON.stringify(value)">
+      <span class="table-item-value">{{ value }}</span>
     </div>
   </div>
 </template>
@@ -37,6 +37,14 @@ export default {
      display: flex;
      width: 100%;
      justify-content: space-between;
+     text-overflow: ellipsis;
+     white-space: nowrap;
+     overflow: hidden;
+     .table-item-value {
+       text-overflow: ellipsis;
+       white-space: nowrap;
+       overflow: hidden;
+     }
    }
  }
 

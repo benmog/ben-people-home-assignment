@@ -68,6 +68,9 @@ export default {
     align-items: center;
     justify-content: space-between;
     .table-header-item {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
       width: 100%;
       padding: 4px;
       text-align: left;

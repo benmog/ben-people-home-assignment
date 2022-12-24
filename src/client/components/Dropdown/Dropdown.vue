@@ -27,7 +27,7 @@ export default {
   props: {
     dropdownHeader: {
       type: String,
-      default: 'Select wanted filters',
+      default: 'Select filters',
     },
     items: {
       type: Array,
@@ -74,9 +74,11 @@ export default {
 
     .dropdown-header {
       border-radius: 4px;
-      border: 1px solid white;
+      border: 1px solid #efefef;
+
     }
     .header-marked {
+      border-radius: 4px;
       border: 1px solid  #8484d7;
     }
 
